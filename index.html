@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Integrado de Gestión - Nestlé S.A.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: #e74c3c;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header h2 {
+            color: #7f8c8d;
+            font-size: 1.3em;
+            font-weight: normal;
+        }
+
+        .iso-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .badge-9001 { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .badge-14001 { background: linear-gradient(135deg, #27ae60, #229954); }
+        .badge-45001 { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+
+        /* Menú superior de navegación */
+        .main-nav {
+            background: white;
+            padding: 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-nav > ul > li {
+            flex: 1;
+        }
+
+        .main-nav a {
+            display: block;
+            text-decoration: none;
+            color: white;
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.1em;
+            border-right: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .main-nav > ul > li:last-child a {
+            border-right: none;
+        }
+
+        .main-nav a:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-2px);
+        }
+
+        .main-nav a.active {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        /* Navegación secundaria */
+        nav {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Contenedores de secciones principales */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 4px solid #e74c3c;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section h4 {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ffc107;
+            margin: 20px 0;
+        }
+
+        .danger-box {
+            background: #f8d7da;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #dc3545;
+            margin: 20px 0;
+        }
+
+        .success-box {
+            background: #d4edda;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #28a745;
+            margin: 20px 0;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Mapa de procesos */
+        .process-map {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .process-map img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* Estilos para el informe de auditoría */
+        .audit-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .audit-header-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .audit-header-item strong {
+            display: block;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .hallazgo-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .hallazgo-card.nc {
+            border-left: 5px solid #dc3545;
+        }
+
+        .hallazgo-card.obs {
+            border-left: 5px solid #ffc107;
+        }
+
+        .hallazgo-card h4 {
+            color: #e74c3c;
+            margin-top: 0;
+        }
+
+        footer {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .main-nav ul {
+                flex-direction: column;
+            }
+
+            .main-nav a {
+                border-right: none;
+                border-bottom: 2px solid rgba(255,255,255,0.2);
+            }
+
+            .audit-header {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏭 NESTLÉ S.A.</h1>
+            <h2>Sistema Integrado de Gestión</h2>
+            <div class="iso-badges">
+                <div class="badge badge-9001">ISO 9001:2015</div>
+                <div class="badge badge-14001">ISO 14001:2015</div>
+                <div class="badge badge-45001">ISO 45001:2018</div>
+            </div>
+        </header>
+
+        <!-- Menú principal de navegación -->
+        <div class="main-nav">
+            <ul>
+                <li><a href="#" class="nav-link active" data-section="presentacion">📊 Presentación Nestlé</a></li>
+                <li><a href="#" class="nav-link" data-section="sgi">📋 Sistema de Gestión Integrado</a></li>
+                <li><a href="#" class="nav-link" data-section="auditoria">🔍 Plan y Auditoría</a></li>
+            </ul>
+        </div>
+
+        <!-- Sección: Presentación Nestlé -->
+        <div id="presentacion" class="content-section active">
+            <section class="section">
+                <h2>🎯 COMPRENSIÓN Y CONTEXTO</h2>
+
+                <h3>Contexto Externo</h3>
+                <p>La organización se mueve en un entorno marcado por regulaciones sanitarias, además de la presión competitiva de grandes compañías. Los avances tecnológicos en trazabilidad, digitalización y packaging sostenible impulsan la innovación, el crecimiento del e-commerce. Factores sociales, culturales y económicos como la inflación, los cambios de consumo post-pandemia y la diversidad global completan un contexto dinámico que exige adaptación constante.</p>
+
+                <h3>Contexto Interno</h3>
+                <p>La organización se guía por valores como la calidad, la salud, la sostenibilidad y el respeto a las personas. Su cultura promueve la innovación, la mejora continua, el trabajo en equipo y la orientación al cliente. Cuenta con conocimientos en ciencia alimentaria, investigación, marketing y una red global de suministro. Además, mantiene un buen desempeño con liderazgo en el mercado, presencia en numerosos países, un portafolio variado y una base financiera sólida.</p>
+            </section>
+
+            <section class="section">
+                <h2>📊 ANÁLISIS DOFA</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px;">
+                    <div style="background: linear-gradient(135deg, #27ae60, #229954); padding: 30px; border-radius: 15px; color: white;">
+                        <h3 style="color: white; border-bottom: 3px solid white; padding-bottom: 10px;">💪 Fortalezas</h3>
+                        <ul style="color: white; margin-left: 20px;">
+                            <li>Marca global reconocida y confiable</li>
+                            <li>Portfolio diversificado de productos</li>
+                            <li>Red de distribución global establecida</li>
+                            <li>Experiencia en gestión de calidad e inocuidad</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #3498db, #2980b9); padding: 30px; border-radius: 15px; color: white;">
+                        <h3 style="color: white; border-bottom: 3px solid white; padding-bottom: 10px;">🎯 Oportunidades</h3>
+                        <ul style="color: white; margin-left: 20px;">
+                            <li>Crecimiento en mercados emergentes</li>
+                            <li>Tendencia hacia productos saludables y funcionales</li>
+                            <li>Expansión en canales digitales</li>
+                            <li>Desarrollo de productos sostenibles</li>
+                            <li>Personalización nutricional</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #e67e22, #d35400); padding: 30px; border-radius: 15px; color: white;">
+                        <h3 style="color: white; border-bottom: 3px solid white; padding-bottom: 10px;">⚠️ Debilidades</h3>
+                        <ul style="color: white; margin-left: 20px;">
+                            <li>Complejidad de la cadena de suministro global</li>
+                            <li>Dependencia de materias prima con precios volátiles</li>
+                            <li>Percepción de algunos productos como poco saludables</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); padding: 30px; border-radius: 15px; color: white;">
+                        <h3 style="color: white; border-bottom: 3px solid white; padding-bottom: 10px;">🔴 Amenazas</h3>
+                        <ul style="color: white; margin-left: 20px;">
+                            <li>Regulaciones más estrictas en nutrición</li>
+                            <li>Competencia de marcas locales y premium</li>
+                            <li>Volatilidad de precios de materias primas</li>
+                            <li>Cambios en preferencias del consumidor</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>⚠️ RIESGOS Y OPORTUNIDADES</h2>
+
+                <h3>Riesgos Identificados</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Riesgo</th>
+                            <th>Probabilidad</th>
+                            <th>Impacto</th>
+                            <th>Acciones de Mitigación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Contaminación microbiológica</strong></td>
+                            <td>Media</td>
+                            <td>Alto</td>
+                            <td>Programas de prerrequisitos robustos, Monitoreo ambiental, Capacitación continua</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Falla en cadena de frío</strong></td>
+                            <td>Media</td>
+                            <td>Alto</td>
+                            <td>Monitoreo de temperatura, Proveedores calificados, Planes de contingencia</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cambios regulatorios</strong></td>
+                            <td>Alta</td>
+                            <td>Medio</td>
+                            <td>Monitoreo regulatorio, Participación en asociaciones, Flexibilidad de formulaciones</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Volatilidad de proveedores</strong></td>
+                            <td>Media</td>
+                            <td>Medio</td>
+                            <td>Diversificación de proveedores, Contratos a largo plazo, Desarrollo de proveedores locales</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Oportunidades Identificadas</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Oportunidad</th>
+                            <th>Potencial</th>
+                            <th>Acciones de Aprovechamiento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Productos funcionales</strong></td>
+                            <td>Alto</td>
+                            <td>Inversión en I+D nutricional, Alianzas estratégicas, Marketing educativo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sostenibilidad</strong></td>
+                            <td>Alto</td>
+                            <td>Packaging eco-friendly, Sourcing responsable, Comunicación de impacto</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Digitalización</strong></td>
+                            <td>Medio</td>
+                            <td>Sistemas de trazabilidad, Analytics predictivos, Customer engagement digital</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mercados emergentes</strong></td>
+                            <td>Alto</td>
+                            <td>Adaptación de productos locales, Inversión en infraestructura, Partnerships locales</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2>👥 PARTES INTERESADAS</h2>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div class="info-box" style="background: #e8f4f8;">
+                        <h4 style="color: #2c3e50; margin-bottom: 10px;">🛒 Consumidores</h4>
+                        <ul style="margin-left: 20px;">
+                            <li>Productos seguros y nutritivos</li>
+                            <li>Información clara en etiquetado</li>
+                            <li>Disponibilidad y accesibilidad</li>
+                            <li>Experiencia de consumo satisfactoria</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box" style="background: #fef5e7;">
+                        <h4 style="color: #2c3e50; margin-bottom: 10px;">🏛️ Autoridades Regulatorias</h4>
+                        <ul style="margin-left: 20px;">
+                            <li>Cumplimiento normativo</li>
+                            <li>Transparencia en procesos</li>
+                            <li>Respuesta ante incidentes</li>
+                            <li>Reportes de calidad</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box" style="background: #f4ecf7;">
+                        <h4 style="color: #2c3e50; margin-bottom: 10px;">🤝 Proveedores</h4>
+                        <ul style="margin-left: 20px;">
+                            <li>Relaciones comerciales estables</li>
+                            <li>Pagos oportunos</li>
+                            <li>Especificaciones claras</li>
+                            <li>Desarrollo conjunto</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box" style="background: #e8f8f5;">
+                        <h4 style="color: #2c3e50; margin-bottom: 10px;">🚚 Distribuidores</h4>
+                        <ul style="margin-left: 20px;">
+                            <li>Calidad consistente</li>
+                            <li>Entregas puntuales</li>
+                            <li>Vida útil adecuada</li>
+                            <li>Soporte comercial</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box" style="background: #fdeaea;">
+                        <h4 style="color: #2c3e50; margin-bottom: 10px;">👨‍💼 Empleados</h4>
+                        <ul style="margin-left: 20px;">
+                            <li>Ambiente de trabajo seguro</li>
+                            <li>Desarrollo profesional</li>
+                            <li>Compensación justa</li>
+                            <li>Propósito organizacional</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box" style="background: #ebf5fb;">
+                        <h4 style="color: #2c3e50; margin-bottom: 10px;">📈 Accionistas</h4>
+                        <ul style="margin-left: 20px;">
+                            <li>Rentabilidad sostenible</li>
+                            <li>Crecimiento del negocio</li>
+                            <li>Gestión de riesgos</li>
+                            <li>Transparencia financiera</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>📜 POLÍTICA INTEGRADA DE CALIDAD</h2>
+
+                <div class="info-box" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-left: 5px solid #e74c3c;">
+                    <p style="font-size: 1.1em; line-height: 1.8; color: white;">
+                        <strong>En Nestlé, nos comprometemos a mejorar la calidad de vida y contribuir a un futuro más saludable mediante la entrega consistente de productos alimentarios y bebidas seguros, nutritivos y de la más alta calidad.</strong>
+                    </p>
+                    <p style="color: white; margin-top: 15px;">
+                        Nuestra dedicación a la excelencia se fundamenta en cuatro pilares fundamentales que guían todas nuestras operaciones globales.
+                    </p>
+                </div>
+
+                <h3>Compromisos de Calidad</h3>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 30px;">
+                    <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); padding: 25px; border-radius: 15px; color: white; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                        <h4 style="color: white; margin-bottom: 15px; font-size: 1.3em;">🛡️ EXCELENCIA EN SEGURIDAD ALIMENTARIA</h4>
+                        <p style="color: white; line-height: 1.6;">
+                            Garantizamos que todos nuestros productos cumplan con los más estrictos estándares de inocuidad alimentaria, implementando sistemas robustos de control desde la materia prima hasta el consumidor final, protegiendo la salud y confianza de quienes eligen nuestros productos.
+                        </p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #3498db, #2980b9); padding: 25px; border-radius: 15px; color: white; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                        <h4 style="color: white; margin-bottom: 15px; font-size: 1.3em;">🥗 INNOVACIÓN NUTRICIONAL RESPONSABLE</h4>
+                        <p style="color: white; line-height: 1.6;">
+                            Desarrollamos productos que contribuyen positivamente a la nutrición y el bienestar, basados en ciencia sólida y respondiendo a las necesidades nutricionales específicas de nuestros consumidores en cada etapa de la vida.
+                        </p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #27ae60, #229954); padding: 25px; border-radius: 15px; color: white; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                        <h4 style="color: white; margin-bottom: 15px; font-size: 1.3em;">🌍 SOSTENIBILIDAD Y RESPONSABILIDAD SOCIAL</h4>
+                        <p style="color: white; line-height: 1.6;">
+                            Operamos con respeto por el medio ambiente y las comunidades donde tenemos presencia, asegurando prácticas sostenibles en toda nuestra cadena de valor y contribuyendo al desarrollo socioeconómico local.
+                        </p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #9b59b6, #8e44ad); padding: 25px; border-radius: 15px; color: white; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                        <h4 style="color: white; margin-bottom: 15px; font-size: 1.3em;">📈 MEJORA CONTINUA E INNOVACIÓN</h4>
+                        <p style="color: white; line-height: 1.6;">
+                            Fomentamos una cultura de excelencia operacional donde cada colaborador contribuye activamente a la mejora continua de nuestros procesos, productos y servicios, manteniéndonos a la vanguardia de la industria alimentaria.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>🎯 OBJETIVOS DE CALIDAD</h2>
+
+                <div class="success-box">
+                    <h3>Objetivo General</h3>
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        Asegurar que todos los productos Nestlé cumplan consistentemente con los más altos estándares de calidad, inocuidad y nutrición, superando las expectativas del consumidor y los requisitos regulatorios, mientras se promueve la mejora continua y la sostenibilidad en todas las operaciones.
+                    </p>
+                </div>
+
+                <h3>Objetivos Específicos</h3>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div class="info-box">
+                        <h4>1️⃣ Calidad del Producto</h4>
+                        <p>Lograr <strong>99.5%</strong> de productos liberados sin desviaciones de calidad y mantener el índice de reclamos por calidad menor a <strong>0.1%</strong>.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>2️⃣ Inocuidad Alimentaria</h4>
+                        <p><strong>Cero incidentes</strong> de inocuidad reportados a autoridades y el <strong>100%</strong> de plantas certificadas en estándares reconocidos (BRC, SQF, FSSC 22000).</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>3️⃣ Satisfacción del Cliente</h4>
+                        <p>Alcanzar <strong>95%</strong> de satisfacción del consumidor y un tiempo de respuesta a reclamos menor a <strong>48 horas</strong>.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>4️⃣ Eficiencia Operacional</h4>
+                        <p>Mejorar eficiencia de líneas de producción en <strong>10%</strong>.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>5️⃣ Mejora Continua</h4>
+                        <p>Implementar <strong>100%</strong> de acciones correctivas en tiempo y lograr un <strong>95%</strong> de cumplimiento en auditorías internas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>📍 ALCANCE DEL SISTEMA</h2>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px;">
+                    <div>
+                        <h3>✅ Actividades Incluidas</h3>
+                        <ul>
+                            <li>Investigación y desarrollo de productos alimentarios</li>
+                            <li>Procurement y gestión de proveedores</li>
+                            <li>Manufactura y procesamiento de alimentos y bebidas</li>
+                            <li>Control de calidad e inocuidad alimentaria</li>
+                            <li>Distribución y logística</li>
+                            <li>Servicio al cliente y gestión de reclamos</li>
+                            <li>Marketing y comunicación de productos</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3>📦 Productos y Servicios Cubiertos</h3>
+                        <ul>
+                            <li>Productos lácteos (leches, yogures, quesos)</li>
+                            <li>Bebidas (café, agua, bebidas nutricionales)</li>
+                            <li>Alimentos preparados (sopas, salsas, comidas listas)</li>
+                            <li>Confitería (chocolates, dulces)</li>
+                            <li>Cuidado de mascotas</li>
+                            <li>Nutrición especializada (infantil, clínica)</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3>🏭 Ubicaciones</h3>
+                        <ul>
+                            <li>Centros de investigación y desarrollo</li>
+                            <li>Plantas de manufactura globales</li>
+                            <li>Centros de distribución</li>
+                            <li>Oficinas comerciales y administrativas</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>⚙️ PROCESOS PARA APOYO A LA OPERACIÓN</h2>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 30px;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; border-left: 5px solid #3498db;">
+                        <h3 style="color: #2c3e50;">🤝 Proceso de Gestión de Proveedores</h3>
+                        <ul style="margin-left: 20px; margin-top: 15px;">
+                            <li>Manual de evaluación y calificación de proveedores</li>
+                            <li>Procedimientos de auditoría a proveedores</li>
+                            <li>Especificaciones técnicas de materias primas</li>
+                            <li>Formatos de evaluación y reevaluación</li>
+                            <li>Matriz de proveedores aprobados</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; border-left: 5px solid #27ae60;">
+                        <h3 style="color: #2c3e50;">🏭 Proceso de Producción</h3>
+                        <ul style="margin-left: 20px; margin-top: 15px;">
+                            <li>Procedimientos operativos estándar (SOP) por línea de producción</li>
+                            <li>Especificaciones de producto y proceso</li>
+                            <li>Instrucciones de trabajo por posición</li>
+                            <li>Procedimientos de limpieza y sanitización</li>
+                            <li>Planes de control de proceso</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; border-left: 5px solid #e74c3c;">
+                        <h3 style="color: #2c3e50;">🔬 Proceso de Control de Calidad</h3>
+                        <ul style="margin-left: 20px; margin-top: 15px;">
+                            <li>Métodos analíticos validados</li>
+                            <li>Procedimientos de muestreo</li>
+                            <li>Especificaciones de calidad por producto</li>
+                            <li>Instrucciones de manejo de equipos</li>
+                            <li>Procedimientos de liberación de producto</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Sección: Sistema de Gestión Integrado -->
+        <div id="sgi" class="content-section">
+            <nav>
+                <ul>
+                    <li><a href="#competencia">7.2 Competencia</a></li>
+                    <li><a href="#comunicacion">7.4 Comunicación</a></li>
+                    <li><a href="#documentacion">7.5 Documentación</a></li>
+                    <li><a href="#operacional">8.1 Control Operacional</a></li>
+                    <li><a href="#requisitos">8.2 Requisitos</a></li>
+                </ul>
+            </nav>
+
+            <section id="competencia" class="section">
+                <h2>7.2 COMPETENCIA Y FORMACIÓN</h2>
+                
+                <div class="info-box">
+                    <strong>📋 COINCIDENCIA TOTAL:</strong> Las tres normas ISO (9001, 14001, 45001) requieren conservar información documentada como evidencia de competencia del personal.
+                </div>
+
+                <h3>Matriz de Competencias por Posición</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Posición</th>
+                            <th>Competencias Calidad</th>
+                            <th>Competencias Ambientales</th>
+                            <th>Competencias SST</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Operador de Producción</strong></td>
+                            <td>BPM básico, Control de proceso, Detección desviaciones</td>
+                            <td>Segregación residuos, Ahorro agua/energía, Manejo sustancias</td>
+                            <td>EPP correcto, Procedimientos seguros, Reporte de peligros</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Supervisor de Línea</strong></td>
+                            <td>Auditoría interna, Gestión no conformidades, Liberación producto</td>
+                            <td>Gestión aspectos ambientales, Emergencias ambientales</td>
+                            <td>Investigación incidentes, Permisos trabajo, Liderazgo seguridad</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Técnico de Calidad</strong></td>
+                            <td>Métodos analíticos, Calibración equipos, Validación procesos</td>
+                            <td>Monitoreo emisiones, Análisis aguas, Auditoría ambiental</td>
+                            <td>Evaluación riesgos, Higiene industrial, Ergonomía</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gerente de Planta</strong></td>
+                            <td>ISO 9001 completo, Sistema HACCP, Mejora continua</td>
+                            <td>ISO 14001 completo, Legislación ambiental, Sostenibilidad</td>
+                            <td>ISO 45001 completo, Legislación SST, Cultura de seguridad</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Programa de Capacitación</h3>
+                <h4>Inducción General (40 horas)</h4>
+                <ul>
+                    <li>Política integrada de calidad, ambiente y SST</li>
+                    <li>Sistema de gestión integrado Nestlé</li>
+                    <li>Identificación de aspectos, impactos y peligros</li>
+                    <li>Procedimientos de emergencia</li>
+                    <li>Derechos y responsabilidades del trabajador</li>
+                </ul>
+
+                <h4>Capacitación por Nivel</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nivel</th>
+                            <th>Horas/Año</th>
+                            <th>Temas Principales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Operativo</strong></td>
+                            <td>120 horas</td>
+                            <td>BPM (24h), Gestión residuos (16h), Seguridad (24h), Procedimientos (40h), Emergencias (16h)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Técnico</strong></td>
+                            <td>160 horas</td>
+                            <td>Herramientas calidad (32h), Aspectos ambientales (24h), Control riesgos (32h), Métodos (40h)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gerencial</strong></td>
+                            <td>80 horas</td>
+                            <td>Liderazgo SGI (24h), Legislación (24h), Gestión crisis (16h), Sostenibilidad (16h)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="comunicacion" class="section">
+                <h2>7.4 COMUNICACIÓN</h2>
+
+                <div class="info-box">
+                    <strong>🔗 INTEGRACIÓN:</strong> ISO 9001 (Comunicación interna/externa), ISO 14001 (Comunicación ambiental), ISO 45001 (Comunicación, participación y consulta)
+                </div>
+
+                <h3>Matriz de Comunicaciones Integrada</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>¿Qué Comunicar?</th>
+                            <th>¿A Quién?</th>
+                            <th>¿Cuándo?</th>
+                            <th>¿Cómo?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Política Integrada</td>
+                            <td>Todos los colaboradores</td>
+                            <td>Inducción + Anual</td>
+                            <td>Carteleras, intranet, reuniones</td>
+                        </tr>
+                        <tr>
+                            <td>Objetivos de Calidad</td>
+                            <td>Personal operativo/técnico</td>
+                            <td>Mensual</td>
+                            <td>Tableros visuales</td>
+                        </tr>
+                        <tr>
+                            <td>Desempeño Ambiental</td>
+                            <td>Alta dirección, comunidad</td>
+                            <td>Trimestral/Anual</td>
+                            <td>Reportes, web</td>
+                        </tr>
+                        <tr>
+                            <td>Indicadores SST</td>
+                            <td>Todos los colaboradores</td>
+                            <td>Mensual</td>
+                            <td>Carteleras, reuniones</td>
+                        </tr>
+                        <tr>
+                            <td>Emergencias</td>
+                            <td>Personal afectado</td>
+                            <td>Inmediato</td>
+                            <td>Alarmas, WhatsApp</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="documentacion" class="section">
+                <h2>7.5 INFORMACIÓN DOCUMENTADA</h2>
+
+                <div class="info-box">
+                    <strong>📄 COINCIDENCIA TOTAL:</strong> Las tres normas requieren control de información documentada con los mismos criterios.
+                </div>
+
+                <h3>Estructura Documental</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nivel</th>
+                            <th>Tipo</th>
+                            <th>Ejemplos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>NIVEL 1</td>
+                            <td>Estratégicos</td>
+                            <td>Manual SGI, Política Integrada, Mapa de Procesos</td>
+                        </tr>
+                        <tr>
+                            <td>NIVEL 2</td>
+                            <td>Tácticos</td>
+                            <td>20 procedimientos, Manuales HACCP/BPM/Ambiental/SST</td>
+                        </tr>
+                        <tr>
+                            <td>NIVEL 3</td>
+                            <td>Operativos</td>
+                            <td>150 instrucciones, Especificaciones, 200+ formatos</td>
+                        </tr>
+                        <tr>
+                            <td>NIVEL 4</td>
+                            <td>Externos</td>
+                            <td>Normas ISO, Legislación, Especificaciones clientes</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Tiempos de Retención</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Documento</th>
+                            <th>Retención Activa</th>
+                            <th>Retención Pasiva</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Manual SGI</td>
+                            <td>Vigencia</td>
+                            <td>10 años</td>
+                        </tr>
+                        <tr>
+                            <td>Registros producción</td>
+                            <td>3 años</td>
+                            <td>Vida útil + 6 meses</td>
+                        </tr>
+                        <tr>
+                            <td>Registros ambientales</td>
+                            <td>5 años</td>
+                            <td>5 años (archivo permanente)</td>
+                        </tr>
+                        <tr>
+                            <td>Registros SST</td>
+                            <td>Durante empleo + 20 años</td>
+                            <td>Evaluación legal</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="operacional" class="section">
+                <h2>8.1 PLANIFICACIÓN Y CONTROL OPERACIONAL</h2>
+
+                <div class="info-box">
+                    <strong>⚙️ COINCIDENCIA TOTAL:</strong> Las tres normas requieren planificar y controlar operaciones para cumplir requisitos.
+                </div>
+
+                <h3>Objetivos del Control Operacional</h3>
+                <ul>
+                    <li><strong>ISO 9001:</strong> Cumplir requisitos para productos y servicios</li>
+                    <li><strong>ISO 14001:</strong> Cumplir requisitos ambientales y objetivos</li>
+                    <li><strong>ISO 45001:</strong> Eliminar peligros y reducir riesgos SST</li>
+                </ul>
+
+                <h3>Criterios de Aceptación</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Calidad</th>
+                            <th>Ambiente</th>
+                            <th>SST</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Procesos</strong></td>
+                            <td>PCC, Límites control</td>
+                            <td>Consumo agua/energía</td>
+                            <td>Condiciones ergonómicas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Productos</strong></td>
+                            <td>Especificaciones fisicoquímicas</td>
+                            <td>Packaging sostenible</td>
+                            <td>Manipulación segura</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Preparación ante Emergencias</h3>
+                <h4>Emergencias Identificadas</h4>
+                <ul>
+                    <li><strong>Ambientales:</strong> Derrames químicos, Fallas tratamiento aguas, Emisiones incontroladas</li>
+                    <li><strong>SST:</strong> Incendio/Explosión, Terremoto, Emergencia médica, Falla estructural</li>
+                </ul>
+
+                <h4>Planes de Respuesta</h4>
+                <ul>
+                    <li>✅ Brigada de emergencias entrenada</li>
+                    <li>✅ Equipos de respuesta disponibles</li>
+                    <li>✅ Simulacros trimestrales</li>
+                    <li>✅ Protocolos de comunicación</li>
+                    <li>✅ Coordinación con entidades externas</li>
+                </ul>
+            </section>
+
+            <section id="requisitos" class="section">
+                <h2>8.2 REQUISITOS PARA PRODUCTOS Y SERVICIOS</h2>
+
+                <h3>Comunicación con el Cliente</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Información Productos</strong></td>
+                            <td>Fichas técnicas, información nutricional, alérgenos, sostenibilidad, certificaciones</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Canales Atención</strong></td>
+                            <td>Centro contacto 24/7, Portal web, Sistema SAP, Seguimiento tiempo real</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Retroalimentación</strong></td>
+                            <td>Sistema CRM, Encuestas satisfacción, Análisis tendencias, Respuesta ≤48h</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Requisitos Integrados</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Calidad</th>
+                            <th>Ambiente</th>
+                            <th>SST</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Legales</strong></td>
+                            <td>Registro sanitario, Etiquetado</td>
+                            <td>Materiales, Reciclabilidad</td>
+                            <td>Alérgenos, Advertencias</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cliente</strong></td>
+                            <td>Especificaciones técnicas</td>
+                            <td>Certificaciones sostenibilidad</td>
+                            <td>Manipulación segura</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Organización</strong></td>
+                            <td>Estándares Nestlé (NQS)</td>
+                            <td>Objetivos ambientales</td>
+                            <td>Estándares internos SST</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+
+        <!-- Sección: Plan de Auditoría e Informe -->
+        <div id="auditoria" class="content-section">
+            <section class="section">
+                <h2>📊 MAPA DE PROCESOS - NESTLÉ S.A.</h2>
+                <div class="info-box">
+                    <strong>Sistema de Gestión Integrado</strong><br>
+                    ISO 9001:2015 (Gestión de Calidad) | ISO 14001:2015 (Gestión Ambiental) | ISO 45001:2018 (SST)<br>
+                    Aplica a todos los procesos de producción, distribución y comercialización de productos alimenticios Nestlé
+                </div>
+
+                <div class="process-map">
+                    <img src="mapa-procesos-nestle.png" alt="Mapa de Procesos Nestlé S.A." style="width: 100%; max-width: 1200px; height: auto; border: 2px solid #ddd; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <p style="text-align: center; color: #7f8c8d; font-style: italic;">
+                        El mapa de procesos muestra la estructura completa del Sistema de Gestión Integrado de Nestlé,<br>
+                        incluyendo procesos estratégicos, misionales y de apoyo que aseguran la calidad,<br>
+                        seguridad alimentaria, gestión ambiental y seguridad laboral.
+                    </p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>📋 PLAN DE AUDITORÍA INTERNA</h2>
+
+                <div class="audit-header">
+                    <div class="audit-header-item">
+                        <strong>Organización:</strong>
+                        Nestlé S.A. - Planta Bugalagrande
+                    </div>
+                    <div class="audit-header-item">
+                        <strong>Tipo de Auditoría:</strong>
+                        2ª Parte - Auditoría Interna Combinada
+                    </div>
+                    <div class="audit-header-item">
+                        <strong>Fecha:</strong>
+                        12-13 de Marzo de 2025
+                    </div>
+                </div>
+
+                <h3>🎯 OBJETIVO</h3>
+                <p>Evaluar la conformidad, eficacia y mejora continua del Sistema de Gestión de la Calidad, Seguridad y Salud en el Trabajo, Medio Ambiente y Seguridad Alimentaria de Nestlé, verificando el cumplimiento de los requisitos de la norma aplicable (ISO 9001, ISO 14001, ISO 45001, ISO 22000), políticas internas y procedimientos establecidos.</p>
+
+                <h3>📌 ALCANCE</h3>
+                <p>La auditoría cubrirá los procesos operativos, administrativos y de soporte de la planta de Nestlé, incluyendo:</p>
+                <ul>
+                    <li>Producción y manufactura</li>
+                    <li>Control de calidad</li>
+                    <li>Logística y almacenamiento</li>
+                    <li>Compras y proveedores</li>
+                    <li>Recursos humanos</li>
+                    <li>Mantenimiento</li>
+                    <li>Seguridad alimentaria</li>
+                    <li>Gestión ambiental y SST</li>
+                </ul>
+                <p>Incluye revisión documental, verificación en campo y entrevistas.</p>
+
+                <h3>👥 EQUIPO AUDITOR</h3>
+                <ul>
+                    <li><strong>Auditor Líder:</strong> Laura Godoy</li>
+                    <li><strong>Auditor de Apoyo:</strong> Juan David Caicedo</li>
+                </ul>
+
+                <h3>🔧 RECURSOS</h3>
+                <ul>
+                    <li>Acceso a instalaciones, áreas operativas y documentos del sistema de gestión</li>
+                    <li>Computador portátil, formatos de auditoría, cámara fotográfica (si está permitido)</li>
+                    <li>Salas para entrevistas</li>
+                    <li>Disponibilidad del personal clave</li>
+                    <li>Equipo de protección personal (EPP) para áreas operativas</li>
+                </ul>
+
+                <h3>📅 PROGRAMA DE AUDITORÍA</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Proceso/Actividad</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Criterios de Auditoría</th>
+                            <th>Contacto</th>
+                            <th>Auditor</th>
+                            <th>Lugar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Producción y operaciones</td>
+                            <td>12/03/2025</td>
+                            <td>8:00-10:00</td>
+                            <td>ISO 9001:2015, Procedimiento de producción</td>
+                            <td>Jefe de Producción</td>
+                            <td>Auditor Líder</td>
+                            <td>Planta de Producción</td>
+                        </tr>
+                        <tr>
+                            <td>Control de calidad</td>
+                            <td>12/03/2025</td>
+                            <td>10:00-12:00</td>
+                            <td>ISO 22000, Manual de calidad</td>
+                            <td>Coordinador de Calidad</td>
+                            <td>Auditor de apoyo</td>
+                            <td>Laboratorio</td>
+                        </tr>
+                        <tr>
+                            <td>Mantenimiento</td>
+                            <td>12/03/2025</td>
+                            <td>13:00-14:00</td>
+                            <td>ISO 9001, Procedimiento de mantenimiento</td>
+                            <td>Jefe de Mantenimiento</td>
+                            <td>Auditor Líder</td>
+                            <td>Taller</td>
+                        </tr>
+                        <tr>
+                            <td>Seguridad Alimentaria</td>
+                            <td>12/03/2025</td>
+                            <td>14:00-15:30</td>
+                            <td>ISO 22000, HACCP</td>
+                            <td>Responsable de Inocuidad</td>
+                            <td>Auditor de apoyo</td>
+                            <td>Planta</td>
+                        </tr>
+                        <tr>
+                            <td>Logística y almacenamiento</td>
+                            <td>13/03/2025</td>
+                            <td>8:00-10:00</td>
+                            <td>ISO 9001, Procedimiento logístico</td>
+                            <td>Supervisor Logístico</td>
+                            <td>Auditor Líder</td>
+                            <td>Almacén</td>
+                        </tr>
+                        <tr>
+                            <td>Compras y proveedores</td>
+                            <td>13/03/2025</td>
+                            <td>10:00-11:30</td>
+                            <td>ISO 9001, Evaluación de proveedores</td>
+                            <td>Analista de Compras</td>
+                            <td>Auditor de apoyo</td>
+                            <td>Oficina compras</td>
+                        </tr>
+                        <tr>
+                            <td>Gestión Ambiental</td>
+                            <td>13/03/2025</td>
+                            <td>13:00-14:30</td>
+                            <td>ISO 14001, Programa ambiental</td>
+                            <td>Coordinador Ambiental</td>
+                            <td>Auditor Líder</td>
+                            <td>Área ambiental</td>
+                        </tr>
+                        <tr>
+                            <td>SST (Seguridad y Salud en el Trabajo)</td>
+                            <td>13/03/2025</td>
+                            <td>14:30-16:00</td>
+                            <td>ISO 45001, Matriz de peligros y riesgos</td>
+                            <td>Responsable SST</td>
+                            <td>Auditor de apoyo</td>
+                            <td>Oficina SST</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>✅ LISTA DE VERIFICACIÓN</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Requisito a Verificar</th>
+                            <th>Preguntas</th>
+                            <th>Evidencia Objetiva</th>
+                            <th>Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cumplimiento de procedimientos operativos</td>
+                            <td>¿El personal sigue los procedimientos establecidos?</td>
+                            <td>Registros, instructivos firmados, observación en planta</td>
+                            <td>✅ Conforme</td>
+                        </tr>
+                        <tr>
+                            <td>Control de calidad en proceso</td>
+                            <td>¿Se realizan los controles de calidad según el plan?</td>
+                            <td>Formatos de inspección, equipos calibrados</td>
+                            <td>⚠️ Algunos registros incompletos</td>
+                        </tr>
+                        <tr>
+                            <td>Trazabilidad del producto</td>
+                            <td>¿Se garantiza la trazabilidad desde materia prima hasta producto final?</td>
+                            <td>Codificación, registros de lotes</td>
+                            <td>✅ Conforme</td>
+                        </tr>
+                        <tr>
+                            <td>Mantenimiento preventivo</td>
+                            <td>¿El plan de mantenimiento se cumple en tiempo y forma?</td>
+                            <td>Órdenes de trabajo, registros de mantenimiento</td>
+                            <td>❌ Varias órdenes retrasadas</td>
+                        </tr>
+                        <tr>
+                            <td>Gestión de proveedores</td>
+                            <td>¿Los proveedores están evaluados y aprobados?</td>
+                            <td>Listado de proveedores aprobados, evaluaciones</td>
+                            <td>✅ Conforme</td>
+                        </tr>
+                        <tr>
+                            <td>Gestión de inocuidad alimentaria</td>
+                            <td>¿Se aplican los puntos críticos de control (HACCP)?</td>
+                            <td>Registros PCC, monitoreo</td>
+                            <td>⚠️ Una medición sin firma</td>
+                        </tr>
+                        <tr>
+                            <td>Almacenamiento y logística</td>
+                            <td>¿El almacenamiento cumple condiciones adecuadas (FIFO/FEFO)?</td>
+                            <td>Observación en almacén, registros de inventario</td>
+                            <td>✅ Conforme</td>
+                        </tr>
+                        <tr>
+                            <td>Cumplimiento de requisitos ambientales</td>
+                            <td>¿Se gestionan los residuos según la normativa?</td>
+                            <td>Registros de disposición, evidencias fotográficas</td>
+                            <td>❌ Contenedor sin rotular</td>
+                        </tr>
+                        <tr>
+                            <td>SST – Uso de EPP</td>
+                            <td>¿El personal usa el EPP obligatorio?</td>
+                            <td>Observación en campo, entregas de EPP</td>
+                            <td>⚠️ Un trabajador sin gafas de protección</td>
+                        </tr>
+                        <tr>
+                            <td>Capacitación del personal</td>
+                            <td>¿El personal ha recibido la capacitación requerida?</td>
+                            <td>Listas de asistencia, planes de capacitación</td>
+                            <td>✅ Conforme</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2>📄 INFORME DE AUDITORÍA INTERNA</h2>
+
+                <div class="audit-header">
+                    <div class="audit-header-item">
+                        <strong>Fecha de Informe:</strong>
+                        14/03/2025
+                    </div>
+                    <div class="audit-header-item">
+                        <strong>Lugar:</strong>
+                        Planta Nestlé - Bugalagrande
+                    </div>
+                    <div class="audit-header-item">
+                        <strong>Informe No.:</strong>
+                        IA-001-2025
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>Cliente de la Auditoría:</strong> Nestlé – Bugalagrande<br>
+                    <strong>Clase de Auditoría:</strong> 2ª Parte
+                </div>
+
+                <h3>🎯 OBJETIVO</h3>
+                <p>Evaluar el grado de conformidad, eficacia y mejora continua del Sistema Integrado de Gestión (Calidad, Inocuidad Alimentaria, Medio Ambiente y Seguridad y Salud en el Trabajo), verificando su cumplimiento frente a normas aplicables, documentos internos y requisitos legales vigentes.</p>
+
+                <h3>📌 ALCANCE</h3>
+                <p>La auditoría abarcó los siguientes procesos:</p>
+                <ul>
+                    <li>Producción y operaciones</li>
+                    <li>Control de calidad</li>
+                    <li>Seguridad alimentaria (HACCP)</li>
+                    <li>Logística y almacenamiento</li>
+                    <li>Compras y proveedores</li>
+                    <li>Mantenimiento</li>
+                    <li>Gestión ambiental</li>
+                    <li>Seguridad y Salud en el Trabajo (SST)</li>
+                    <li>Procesos administrativos y soporte</li>
+                </ul>
+                <p>Incluyó revisión documental, entrevistas con responsables y verificación en campo.</p>
+
+                <h3>👥 EQUIPO AUDITOR</h3>
+                <ul>
+                    <li><strong>Líder del Equipo Auditor:</strong> Laura Godoy</li>
+                    <li><strong>Equipo Auditor:</strong> Juan David Caicedo</li>
+                </ul>
+
+                <h3>📋 CRITERIOS DE AUDITORÍA</h3>
+                <ul>
+                    <li>ISO 9001:2015 – Sistema de Gestión de la Calidad</li>
+                    <li>ISO 14001:2015 – Gestión Ambiental</li>
+                    <li>ISO 45001:2018 – Seguridad y Salud en el Trabajo</li>
+                    <li>ISO 22000 / HACCP – Seguridad Alimentaria</li>
+                    <li>Procedimientos internos de Nestlé</li>
+                    <li>Requisitos legales aplicables</li>
+                </ul>
+
+                <h3>👤 PERSONAL AUDITADO</h3>
+                <ul>
+                    <li>Jefe de Producción</li>
+                    <li>Coordinador de Calidad</li>
+                    <li>Responsable de Inocuidad</li>
+                    <li>Supervisor Logístico</li>
+                    <li>Analista de Compras</li>
+                    <li>Jefe de Mantenimiento</li>
+                    <li>Coordinador Ambiental</li>
+                    <li>Responsable SST</li>
+                    <li>Otros colaboradores involucrados en los procesos auditados</li>
+                </ul>
+
+                <h3>🔍 HALLAZGOS</h3>
+
+                <div class="success-box">
+                    <h4>✅ EVIDENCIAS DE CONFORMIDAD DEL SISTEMA DE GESTIÓN INTEGRADO</h4>
+                    <p>Durante la auditoría se evidenciaron las siguientes conformidades:</p>
+                    <ul>
+                        <li>El personal sigue los procedimientos establecidos en las operaciones</li>
+                        <li>Se verificó trazabilidad adecuada de materias primas y productos terminados</li>
+                        <li>Proveedores evaluados y listados como aprobados</li>
+                        <li>Almacenamiento conforme a FIFO/FEFO</li>
+                        <li>Capacitación del personal actualizada y con registros completos</li>
+                    </ul>
+                </div>
+
+                <h4>❌ NO CONFORMIDADES</h4>
+                
+                <div class="hallazgo-card nc">
+                    <h4>NC-01: Retrasos en el mantenimiento preventivo</h4>
+                    <p><strong>Evidencia:</strong> Órdenes de trabajo pendientes y registros sin cierre.</p>
+                    <p><strong>Requisito afectado:</strong> Procedimiento de mantenimiento – ISO 9001.</p>
+                </div>
+
+                <div class="hallazgo-card nc">
+                    <h4>NC-02: Contenedor ambiental sin rotulación</h4>
+                    <p><strong>Evidencia:</strong> Contenedor de residuos peligrosos sin etiqueta reglamentaria.</p>
+                    <p><strong>Requisito afectado:</strong> Gestión de residuos – ISO 14001 / normativa ambiental.</p>
+                </div>
+
+                <h4>⚠️ OBSERVACIONES</h4>
+                <p>Se identificaron áreas de mejora que no constituyen incumplimientos formales:</p>
+
+                <div class="hallazgo-card obs">
+                    <h4>OBS-01: Registros de control de calidad incompletos</h4>
+                    <p>Algunos formatos de inspección carecen de datos específicos o firmas.</p>
+                </div>
+
+                <div class="hallazgo-card obs">
+                    <h4>OBS-02: Registro HACCP sin firma</h4>
+                    <p>Un control de PCC presentado sin firma del operador responsable.</p>
+                </div>
+
+                <div class="hallazgo-card obs">
+                    <h4>OBS-03: Uso de EPP</h4>
+                    <p>Un colaborador observado sin gafas de seguridad en zona de producción.</p>
+                </div>
+
+                <h3>📊 CONCLUSIÓN</h3>
+                <p>El Sistema Integrado de Gestión de Nestlé demuestra un adecuado nivel de cumplimiento y una operación controlada. Sin embargo, se requieren acciones correctivas para cerrar las no conformidades detectadas, especialmente en mantenimiento preventivo y gestión de residuos.</p>
+                
+                <p>Las observaciones representan oportunidades de mejora en el control documental y en el cumplimiento del uso de elementos de protección personal.</p>
+                
+                <p>El equipo auditor recomienda continuar fortaleciendo las actividades preventivas y los controles operativos.</p>
+            </section>
+        </div>
+
+        <footer>
+            <h3>📋 Sistema Integrado de Gestión - Nestlé S.A.</h3>
+            <p><strong>Documento controlado:</strong> Versión 1.0</p>
+            <p><strong>Fecha:</strong> Noviembre 2025</p>
+            <p style="margin-top: 20px;">
+                ISO 9001:2015 | ISO 14001:2015 | ISO 45001:2018
+            </p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                <strong>Elaborado por:</strong> Juan David Caicedo y Laura Godoy
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Función para cambiar entre secciones principales
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remover clase active de todos los enlaces
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Mostrar la sección seleccionada
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // Agregar clase active al enlace clickeado
+                const activeLink = document.querySelector(`[data-section="${sectionId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+                
+                // Scroll suave al inicio de la página
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Event listeners para los enlaces de navegación principal
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainNavLinks = document.querySelectorAll('.nav-link');
+            mainNavLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                });
+            });
+
+            // Manejar navegación de enlaces internos (solo para la sección SGI)
+            const internalLinks = document.querySelectorAll('nav a[href^="#"]');
+            internalLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
